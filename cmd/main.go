@@ -11,6 +11,7 @@ import (
 	"github.com/revaldidwioctavian/go-fiber-hex-arch/internal/adapter/handler"
 	mylogger "github.com/revaldidwioctavian/go-fiber-hex-arch/internal/adapter/logger"
 	"github.com/revaldidwioctavian/go-fiber-hex-arch/internal/core/service"
+	"github.com/revaldidwioctavian/go-fiber-hex-arch/internal/storage/mongodb"
 	"github.com/revaldidwioctavian/go-fiber-hex-arch/internal/storage/mongodb/repository"
 )
 
@@ -25,7 +26,7 @@ func main() {
 
 	slog.Info("Starting the application", "app", config.App.Name, "env", config.App.Env)
 
-	db, _ := cfg.NewDB(config.DB)
+	db, _ := mongodb.NewDB(config.DB)
 
 	// database, _ := mongodb.New(db, "product")
 

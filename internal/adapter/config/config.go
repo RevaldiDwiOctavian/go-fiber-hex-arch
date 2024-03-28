@@ -1,15 +1,9 @@
 package config
 
 import (
-	"context"
-	"fmt"
-	"log/slog"
 	"os"
-	"time"
 
 	"github.com/joho/godotenv"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type (
@@ -76,28 +70,4 @@ func New() (*Container, error) {
 		http,
 	}, nil
 
-}
-
-func NewDB(cfg *DB) (*mongo.Database, error) {
-	uri := fmt.Sprintf("%s://%s:%s/", cfg.Connection, cfg.Host, cfg.Port)
-
-	dbOptions := options.Client()
-	dbOptions.ApplyURI(uri)
-
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-
-	client, err := mongo.Connect(ctx, dbOptions)
-	if err != nil {
-		slog.Error("Failed to create new database connection", "error", err)
-		return nil, err
-	}
-
-	err = client.Ping(ctx, nil)
-	if err != nil {
-		slog.Error("Failed to ping the database", "error", err)
-		return nil, err
-	}
-	slog.Info("Successfully connected to the database", "db", cfg.Name)
-	return client.Database(cfg.Name), nil
 }
