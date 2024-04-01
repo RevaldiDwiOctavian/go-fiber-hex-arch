@@ -28,8 +28,6 @@ func main() {
 
 	db, _ := mongodb.NewDB(config.DB)
 
-	// database, _ := mongodb.New(db, "product")
-
 	repo := repository.NewProductRepository(db)
 	service := service.NewProductService(repo)
 	productHandler := handler.NewProductHandler(service)
@@ -44,7 +42,7 @@ func main() {
 	handler.NewRouter(app, *productHandler)
 
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.JSON("asda")
+		return c.JSON("Wello Horld!")
 	})
 
 	listenPort := fmt.Sprintf(":%s", config.HTTP.Port)

@@ -114,8 +114,6 @@ func (pr *ProductRepository) GetProducts(ctx context.Context) ([]*domain.Product
 			return nil, err
 		}
 
-		log.Println(singleProduct)
-
 		products = append(products, Product(singleProduct))
 	}
 
@@ -190,7 +188,7 @@ func (pr *ProductRepository) DeleteProduct(ctx context.Context, id string) (*dom
 	}
 
 	if res.DeletedCount == 0 {
-		log.Println("Failed deleteing product")
+		log.Println("Failed deleting product")
 		return nil, err
 	}
 
